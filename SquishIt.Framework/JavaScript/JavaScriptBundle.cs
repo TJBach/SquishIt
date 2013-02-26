@@ -48,8 +48,16 @@ namespace SquishIt.Framework.JavaScript
         public JavaScriptBundle(IDebugStatusReader debugStatusReader)
             : this(debugStatusReader, new FileWriterFactory(new RetryableFileOpener(), 5), new FileReaderFactory(new RetryableFileOpener(), 5), new DirectoryWrapper(), Configuration.Instance.DefaultHasher(), new BundleCache()) { }
 
-        public JavaScriptBundle(IDebugStatusReader debugStatusReader, IFileWriterFactory fileWriterFactory, IFileReaderFactory fileReaderFactory, IDirectoryWrapper directoryWrapper, IHasher hasher, IBundleCache bundleCache) :
-            base(fileWriterFactory, fileReaderFactory, debugStatusReader, directoryWrapper, hasher, bundleCache) { }
+        //Added default cache route
+        public JavaScriptBundle(IDebugStatusReader debugStatusReader, IFileWriterFactory fileWriterFactory,
+                                IFileReaderFactory fileReaderFactory, IDirectoryWrapper directoryWrapper, IHasher hasher,
+                                IBundleCache bundleCache) :
+                                    base(
+                                    fileWriterFactory, fileReaderFactory, debugStatusReader, directoryWrapper, hasher,
+                                    bundleCache)
+        {
+            CacheRoute = "~/bundle/script/";
+        }
 
         protected override string Template
         {

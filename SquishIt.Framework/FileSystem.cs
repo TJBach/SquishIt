@@ -22,8 +22,8 @@ namespace SquishIt.Framework
             }
 
             return HttpContext.Current == null 
-                ? ProcessWithoutHttpContext(file) 
-                : HttpContext.Current.Server.MapPath(file);
+                ? ProcessWithoutHttpContext(file)
+                : HttpContext.Current.Server.MapPath(file) ?? ProcessWithoutHttpContext(file);
         }
 
         static string ProcessWithoutHttpContext(string file)

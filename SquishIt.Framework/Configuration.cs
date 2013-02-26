@@ -32,6 +32,7 @@ namespace SquishIt.Framework
         {
             JavascriptMimeType = "application/javascript";
             CssMimeType = "text/css";
+            _defaultDebugPredicate = UrlBasedDebugEnabler.IsDebugEnabled;
         }
 
         public Configuration UseMinifierForCss<TMinifier>()

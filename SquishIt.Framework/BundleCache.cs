@@ -55,7 +55,7 @@ namespace SquishIt.Framework
 
         public void Remove(string key)
         {
-            HttpRuntime.Cache.Remove(key);
+            HttpRuntime.Cache.Remove(KEY_PREFIX + key);
         }
     }
 }

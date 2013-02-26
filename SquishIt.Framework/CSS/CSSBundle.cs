@@ -67,9 +67,11 @@ namespace SquishIt.Framework.CSS
         {
         }
 
+        //Added a default cache route
         public CSSBundle(IDebugStatusReader debugStatusReader, IFileWriterFactory fileWriterFactory, IFileReaderFactory fileReaderFactory, IDirectoryWrapper directoryWrapper, IHasher hasher, IBundleCache bundleCache)
             : base(fileWriterFactory, fileReaderFactory, debugStatusReader, directoryWrapper, hasher, bundleCache)
         {
+            CacheRoute = "~/bundle/style/";
         }
 
         string ProcessImport(string file, string outputFile, string css)

@@ -342,8 +342,10 @@ namespace SquishIt.Framework.Base
                                 hashInFileName = true;
                                 minifiedContent = GetMinifiedContent(bundleState.Assets, outputFile);
                                 hash = hasher.GetHash(minifiedContent);
-                                renderToPath = renderToPath.Replace("#", hash);
-                                outputFile = outputFile.Replace("#", hash);
+
+                                //Replace only the last instance of hash now to prevent errors with '#' in the path.
+                                renderToPath = renderToPath.ReplaceLast("#", hash);
+                                outputFile = outputFile.ReplaceLast("#", hash);
                             }
 
                             if (bundleState.ShouldRenderOnlyIfOutputFileIsMissing && FileExists(outputFile))

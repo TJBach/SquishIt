@@ -605,7 +605,7 @@ namespace SquishIt.Tests
 
             var content = javaScriptBundle.RenderCached("Test");
 
-            Assert.AreEqual("<script type=\"text/javascript\" src=\"js/output_2.js?r=hash\"></script>", tag);
+            Assert.AreEqual("<script type=\"text/javascript\" src=\"bundle/script/js/output_2.js?r=hash\"></script>", tag);
             Assert.AreEqual(minifiedJavaScript, content);
         }
 
@@ -623,7 +623,7 @@ namespace SquishIt.Tests
             javaScriptBundle.ClearCache();
             var tag = javaScriptBundle.RenderCachedAssetTag("Test");
 
-            Assert.AreEqual("<script type=\"text/javascript\" src=\"assets/js/main?r=hash\"></script>", tag);
+            Assert.AreEqual("<script type=\"text/javascript\" src=\"bundle/script/assets/js/main?r=hash\"></script>", tag);
             Assert.AreEqual(minifiedJavaScript, content);
         }
 
@@ -674,7 +674,7 @@ namespace SquishIt.Tests
             var tag2 = debugJavaScriptBundle.RenderCachedAssetTag("Test");
 
             Assert.AreEqual(tag1, tag2);
-            Assert.AreEqual("<script type=\"text/javascript\" src=\"assets/js/main?r=hash\"></script>", tag1);
+            Assert.AreEqual("<script type=\"text/javascript\" src=\"bundle/script/assets/js/main?r=hash\"></script>", tag1);
             Assert.AreEqual(minifiedJavaScript, content);
         }
 
@@ -1344,7 +1344,7 @@ namespace SquishIt.Tests
                     .Create()
                     .RenderNamed("test");
 
-                var expectedTag = "<script type=\"text/javascript\" src=\"output.js?r=hash\"></script>";
+                var expectedTag = "<script type=\"text/javascript\" src=\"bundle/script/output.js?r=hash\"></script>";
 
                 Assert.AreEqual(expectedTag, TestUtilities.NormalizeLineEndings(tag));
             }
@@ -1366,10 +1366,26 @@ namespace SquishIt.Tests
                     .Create()
                     .RenderCachedAssetTag("test");
 
-                var expectedTag = "<script type=\"text/javascript\" src=\"output.js?r=hash\"></script>";
+                var expectedTag = "<script type=\"text/javascript\" src=\"bundle/script/output.js?r=hash\"></script>";
 
                 Assert.AreEqual(expectedTag, TestUtilities.NormalizeLineEndings(tag));
             }
+        }
+
+        [Test]
+        public void CanRenderCachedBundleByFileName()
+        {
+            var javaScriptBundle = javaScriptBundleFactory
+                    .Create();
+
+            javaScriptBundle.Add("~/js/test.js")
+                    .AsCached("TestCached", "test_#.js");
+
+            var tag = javaScriptBundle.RenderNamed("TestCached");
+            var rendered = javaScriptBundle.GetCachedContent("test_hash.js");
+
+            Assert.AreEqual("<script type=\"text/javascript\" src=\"bundle/script/test_hash.js\"></script>", tag);
+            Assert.That(rendered, Is.EqualTo("function product(n,t){return n*t}function sum(n,t){return n+t};"));
         }
     }
 }

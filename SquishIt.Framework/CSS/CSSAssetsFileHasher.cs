@@ -70,6 +70,10 @@ namespace SquishIt.Framework.CSS
                     {
                         resolvedPath = resolvedPath.Replace("file:", "");
                     }
+                    if (resolvedPath.Contains("#"))
+                    {
+                        resolvedPath = resolvedPath.Replace("#", "%23");
+                    }
 
                     var outputUri = new Uri(resolvedPath + "/", UriKind.Absolute);
 

@@ -9,7 +9,8 @@ using SquishIt.Framework.Utilities;
 
 namespace SquishIt.Framework.Base
 {
-    public abstract partial class BundleBase<T> where T : BundleBase<T>
+    public abstract partial class BundleBase<T> : IBundle
+        where T : BundleBase<T>
     {
         static readonly Dictionary<string, string> renderPathCache = new Dictionary<string, string>();
         static readonly Dictionary<string, BundleState> bundleStateCache = new Dictionary<string, BundleState>();
@@ -33,13 +34,17 @@ namespace SquishIt.Framework.Base
         protected IDirectoryWrapper directoryWrapper;
         protected IHasher hasher;
         IMinifier<T> minifier;
- 
+
+        //Added cache route for prefixing a file path on the generated tag for a cache.
+        protected string CacheRoute { get; set; }
+
         protected IMinifier<T> Minifier
         {
             get { return minifier ?? DefaultMinifier; }
             set { minifier = value; }
         }
 
+        //Defaulted cache route to nothing for the base class, prevents nulls
         protected BundleBase(IFileWriterFactory fileWriterFactory, IFileReaderFactory fileReaderFactory, IDebugStatusReader debugStatusReader, IDirectoryWrapper directoryWrapper, IHasher hasher, IBundleCache bundleCache)
         {
             this.fileWriterFactory = fileWriterFactory;
@@ -54,7 +59,36 @@ namespace SquishIt.Framework.Base
                                   HashKeyName = "r"
                               };
             this.bundleCache = bundleCache;
+            CacheRoute = string.Empty;
         }
+
+        //Added these back in to keep the framework happy.
+        #region IBundle Methods (public)
+
+        public BundleBase<T> SetCacheRoute(string route)
+        {
+            CacheRoute = route;
+
+            return this;
+        }
+
+        void IBundle.SetCacheRoute(string route)
+        {
+            SetCacheRoute(route);
+        }
+
+        public string GetCachedContent(string fileName)
+        {
+            return CacheRenderer.GetFile(CachePrefix, fileName);
+        }
+
+        [Obsolete("Use ClearCache")]
+        public void ClearTestingCache()
+        {
+            ClearCache();
+        }
+
+        #endregion
 
         protected bool IsDebuggingEnabled()
         {
@@ -306,7 +340,7 @@ namespace SquishIt.Framework.Base
         public string RenderCachedAssetTag(string name)
         {
             bundleState = GetCachedBundleState(name);
-            return Render(null, name, new CacheRenderer(CachePrefix, name));
+            return Render(null, name, new CacheRenderer(CachePrefix, name, name));
         }
 
         public void AsNamed(string name, string renderTo)
@@ -316,12 +350,29 @@ namespace SquishIt.Framework.Base
             bundleStateCache[CachePrefix + name] = bundleState;
         }
 
+        //Added to keep legacy code working with no changes
+        [Obsolete("Use AsNamed")]
+        public void AsNamedFile(string name, string renderTo)
+        {
+            AsNamed(name, renderTo);
+        }
+
         public string AsCached(string name, string filePath)
         {
-            string result = Render(filePath, name, new CacheRenderer(CachePrefix, name));
+            //Now adds the cache route to the front of the generated tag for caches
+            var routedPath = String.Concat(CacheRoute, filePath);
+            //Added the file path to the cache renderer so we can locate caches by the created tag
+            string result = Render(routedPath, name, new CacheRenderer(CachePrefix, name, filePath));
             bundleState.Path = filePath;
             bundleStateCache[CachePrefix + name] = bundleState;
             return result;
+        }
+
+        //Added to keep legacy code working with no changes
+        [Obsolete("Use AsCached")]
+        public string AsNamedCache(string name, string filePath)
+        {
+            return AsCached(name, filePath);
         }
 
         public string RenderNamed(string name)

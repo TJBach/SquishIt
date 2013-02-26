@@ -950,12 +950,12 @@ background:url(images/button-loader.gif) #ccc;
 
             string tag = cssBundle
                 .Add("~/css/temp.css")
-                .AsCached("TestCached", "~/static/css/TestCached.css");
+                .AsCached("TestCached", "static/css/TestCached.css");
 
             string contents = cssBundle.RenderCached("TestCached");
 
             Assert.AreEqual(minifiedCss, contents);
-            Assert.AreEqual("<link rel=\"stylesheet\" type=\"text/css\" href=\"static/css/TestCached.css?r=hash\" />", tag);
+            Assert.AreEqual("<link rel=\"stylesheet\" type=\"text/css\" href=\"bundle/style/static/css/TestCached.css?r=hash\" />", tag);
         }
 
         [Test]
@@ -975,7 +975,7 @@ background:url(images/button-loader.gif) #ccc;
             string tag = cssBundle.RenderCachedAssetTag("TestCached");
 
             Assert.AreEqual(minifiedCss, contents);
-            Assert.AreEqual("<link rel=\"stylesheet\" type=\"text/css\" href=\"static/css/TestCached.css?r=hash\" />", tag);
+            Assert.AreEqual("<link rel=\"stylesheet\" type=\"text/css\" href=\"bundle/style/static/css/TestCached.css?r=hash\" />", tag);
         }
 
         [Test]
@@ -1651,13 +1651,13 @@ background:url(images/button-loader.gif) #ccc;
                     .Add(file1)
                     .Add(file2)
                     .ForceDebugIf(queryStringPredicate)
-                    .AsCached("test", "~/output.css");
+                    .AsCached("test", "output.css");
 
                 var tag = cssBundleFactory
                     .Create()
                     .RenderNamed("test");
 
-                var expectedTag = "<link rel=\"stylesheet\" type=\"text/css\" href=\"output.css?r=hash\" />";
+                var expectedTag = "<link rel=\"stylesheet\" type=\"text/css\" href=\"bundle/style/output.css?r=hash\" />";
 
                 Assert.AreEqual(expectedTag, TestUtilities.NormalizeLineEndings(tag));
             }
@@ -1679,7 +1679,7 @@ background:url(images/button-loader.gif) #ccc;
                     .Create()
                     .RenderCachedAssetTag("test");
 
-                var expectedTag = "<link rel=\"stylesheet\" type=\"text/css\" href=\"output.css?r=hash\" />";
+                var expectedTag = "<link rel=\"stylesheet\" type=\"text/css\" href=\"bundle/style/output.css?r=hash\" />";
 
                 Assert.AreEqual(expectedTag, TestUtilities.NormalizeLineEndings(tag));
             }
