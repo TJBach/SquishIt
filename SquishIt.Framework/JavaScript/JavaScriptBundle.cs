@@ -8,7 +8,7 @@ using SquishIt.Framework.Utilities;
 
 namespace SquishIt.Framework.JavaScript
 {
-    public class JavaScriptBundle : BundleBase<JavaScriptBundle>
+    public class JavaScriptBundle : BundleBase<JavaScriptBundle>, IJavaScriptBundle
     {
         const string JS_TEMPLATE = "<script type=\"text/javascript\" {0}src=\"{1}\" defer></script>";
         const string TAG_FORMAT = "<script type=\"text/javascript\">{0}</script>";

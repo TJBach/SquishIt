@@ -68,7 +68,12 @@ namespace SquishIt.Framework
             AllowedStyleExtensions.Add(".CSS");
         }
 
-        public static JavaScriptBundle JavaScript()
+        //public static JavaScriptBundle JavaScript()
+        //{
+        //    return new JavaScriptBundle();
+        //}
+
+        public static JavaScript.IJavaScriptBundle JavaScript()
         {
             return new JavaScriptBundle();
         }
@@ -77,8 +82,13 @@ namespace SquishIt.Framework
         {
             return new JavaScriptBundle(debugStatusReader);
         }
-       
-        public static CSSBundle Css()
+
+        //public static CSSBundle Css()
+        //{
+        //    return new CSSBundle();
+        //}
+
+        public static Css.ICssBundle Css()
         {
             return new CSSBundle();
         }

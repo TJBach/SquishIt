@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using SquishIt.Framework.Base;
+using SquishIt.Framework.Css;
 using SquishIt.Framework.Minifiers;
 using SquishIt.Framework.Resolvers;
 using SquishIt.Framework.Files;
@@ -11,7 +12,7 @@ using SquishIt.Framework.Utilities;
 
 namespace SquishIt.Framework.CSS
 {
-    public class CSSBundle : BundleBase<CSSBundle>
+    public class CSSBundle : BundleBase<CSSBundle>, ICssBundle
     {
         readonly static Regex IMPORT_PATTERN = new Regex(@"@import +url\(([""']){0,1}(.*?)\1{0,1}\);", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         const string CSS_TEMPLATE = "<link rel=\"stylesheet\" type=\"text/css\" {0}href=\"{1}\" />";

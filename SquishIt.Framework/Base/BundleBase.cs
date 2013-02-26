@@ -9,7 +9,7 @@ using SquishIt.Framework.Utilities;
 
 namespace SquishIt.Framework.Base
 {
-    public abstract partial class BundleBase<T> : IBundle
+    public abstract partial class BundleBase<T> : IBundleBase<T> 
         where T : BundleBase<T>
     {
         static readonly Dictionary<string, string> renderPathCache = new Dictionary<string, string>();
