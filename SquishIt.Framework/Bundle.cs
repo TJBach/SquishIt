@@ -73,7 +73,8 @@ namespace SquishIt.Framework
         //    return new JavaScriptBundle();
         //}
 
-        public static JavaScript.IJavaScriptBundle JavaScript()
+        //use this until the framework can be updated.
+        public static IJavaScriptBundle JavaScript()
         {
             return new JavaScriptBundle();
         }
@@ -88,6 +89,7 @@ namespace SquishIt.Framework
         //    return new CSSBundle();
         //}
 
+        //use this until the framework can be updated.
         public static Css.ICssBundle Css()
         {
             return new CSSBundle();

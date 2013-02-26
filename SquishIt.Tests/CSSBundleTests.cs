@@ -1320,7 +1320,7 @@ background:url(images/button-loader.gif) #ccc;
                 cssBundleFactory.FileWriterFactory.Files[
                     TestUtilities.PrepareRelativePath(@"css\output_rewriting_url.css")];
 
-            Assert.AreEqual("a.url{color:#4d926f}", contents);
+            Assert.AreEqual("a.URl{color:#4d926f}", contents);
         }
 
         [Test]

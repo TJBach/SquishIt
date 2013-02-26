@@ -31,14 +31,14 @@ namespace SquishIt.Tests
 																				function sum(a, b){
 																						return a + b;
 																				}");
-        string minifiedJavaScript = "function product(n,t){return n*t}function sum(n,t){return n+t};";
+        string minifiedJavaScript = "function product(a,b){return a*b}function sum(a,b){return a+b};";
 
         string javaScriptPreMinified = "(function() { alert('should end with parens') })()";
 
         string javaScript2 = TestUtilities.NormalizeLineEndings(@"function sum(a, b){
 																						return a + b;
 																			 }");
-        string minifiedJavaScript2 = "function sum(n,t){return n+t};";
+        string minifiedJavaScript2 = "function sum(a,b){return a+b};";
 
         JavaScriptBundleFactory javaScriptBundleFactory;
 
@@ -507,7 +507,7 @@ namespace SquishIt.Tests
                     .Add("~/js/test.js")
                     .Render("~/js/output_10.js");
 
-            Assert.AreEqual("function sum(n,t){return n+t};", javaScriptBundleFactory.FileWriterFactory.Files[TestUtilities.PrepareRelativePath(@"js\output_10.js")]);
+            Assert.AreEqual("function sum(a,b){return a+b};", javaScriptBundleFactory.FileWriterFactory.Files[TestUtilities.PrepareRelativePath(@"js\output_10.js")]);
         }
 
         [Test]
@@ -812,7 +812,7 @@ namespace SquishIt.Tests
                 var expectedTag = "<script type=\"text/javascript\" src=\"output.js?r=hashy\"></script>";
                 Assert.AreEqual(expectedTag, tag);
 
-                var combined = "function replace(n,t){return n+t};function product(n,t){return n*t}function sum(n,t){return n+t};";
+                var combined = "function replace(a,b){return a+b};function product(a,b){return a*b}function sum(a,b){return a+b};";
                 Assert.AreEqual(combined, writerFactory.Files[TestUtilities.PrepareRelativePath(@"output.js")]);
             }
         }
@@ -845,7 +845,7 @@ namespace SquishIt.Tests
                 var expectedTag = "<script type=\"text/javascript\" src=\"output.js?r=hashy\"></script>";
                 Assert.AreEqual(expectedTag, tag);
 
-                var combined = "function replace(n,t){return n+t};function product(n,t){return n*t}function sum(n,t){return n+t};";
+                var combined = "function replace(a,b){return a+b};function product(a,b){return a*b}function sum(a,b){return a+b};";
                 Assert.AreEqual(combined, writerFactory.Files[TestUtilities.PrepareRelativePath(@"output.js")]);
             }
         }
@@ -876,7 +876,7 @@ namespace SquishIt.Tests
             var file2 = "anotherfile.js";
 
             var subtract = "function sub(a,b){return a-b}";
-            var minifiedSubtract = "function sub(n,t){return n-t};";
+            var minifiedSubtract = "function sub(a,b){return a-b};";
 
             var readerFactory = new StubFileReaderFactory();
             readerFactory.SetContentsForFile(TestUtilities.PrepareRelativePath(file1), javaScript);
@@ -1008,7 +1008,7 @@ namespace SquishIt.Tests
             var expectedTag = "<script type=\"text/javascript\" src=\"output.js?r=hashy\"></script>";
             Assert.AreEqual(expectedTag, TestUtilities.NormalizeLineEndings(tag));
 
-            var minifiedScript = "function product(n,t){return n*t}function sum(n,t){return n+t};function sub(n,t){return n-t}function div(n,t){return n/t};";
+            var minifiedScript = "function product(a,b){return a*b}function sum(a,b){return a+b};function sub(a,b){return a-b}function div(a,b){return a/b};";
             Assert.AreEqual(minifiedScript, writerFactory.Files[TestUtilities.PrepareRelativePath(@"output.js")]);
         }
 
@@ -1385,7 +1385,7 @@ namespace SquishIt.Tests
             var rendered = javaScriptBundle.GetCachedContent("test_hash.js");
 
             Assert.AreEqual("<script type=\"text/javascript\" src=\"bundle/script/test_hash.js\"></script>", tag);
-            Assert.That(rendered, Is.EqualTo("function product(n,t){return n*t}function sum(n,t){return n+t};"));
+            Assert.That(rendered, Is.EqualTo("function product(a,b){return a*b}function sum(a,b){return a+b};"));
         }
     }
 }
