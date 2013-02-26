@@ -84,12 +84,15 @@
     <Compile Include="Base\BundleBase.cs" />
     <Compile Include="Base\BundleBase.Rendering.Internals.cs" />
     <Compile Include="Base\BundleState.cs" />
+    <Compile Include="Base\IBundleBase.cs" />
     <Compile Include="Base\Preprocessor.cs" />
     <Compile Include="Base\ProcessResult.cs" />
     <Compile Include="Configuration.cs" />
+    <Compile Include="CSS\ICssBundle.cs" />
     <Compile Include="HttpContext.cs" />
     <Compile Include="IBundle.cs" />
     <Compile Include="IProcessResult.cs" />
+    <Compile Include="JavaScript\IJavaScriptBundle.cs" />
     <Compile Include="StringExtensions.cs" />
     <Compile Include="UrlBasedDebugEnabler.cs" />
     <Compile Include="Utilities\CriticalRenderingSection.cs" />
